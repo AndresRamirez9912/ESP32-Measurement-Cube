@@ -16,11 +16,15 @@
 // ********* Global Variables ********
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1); // Create an object of the oled library
 
-int option =0;
+int option =0; // This variable shows where the user wants to go
 // ***********************************
 
 // ********* Prototype Functions *****
 void createMainMenu(Adafruit_SSD1306);
+void drawArrow(Adafruit_SSD1306*, int);
+void showHeightScreen();
+void showAngleScreen();
+void showRollingScreen();
 // ***********************************
 
 void setup() {
@@ -45,5 +49,22 @@ void setup() {
 }
 
 void loop() {
+  switch (option) {
+    case 0: // Measure Distance
+      showDistanceScreen();
+      break;
 
+    case 1: // Measure Height
+      showHeightScreen();
+      break;
+
+    case 2: // Measure Angle
+      showAngleScreen();
+      break;
+
+    case 3: // Measure Rolling disntace
+      showRollingScreen();
+      break;
+
+  }
 }
