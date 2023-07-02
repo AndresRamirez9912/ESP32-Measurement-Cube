@@ -1,6 +1,7 @@
 // ********* LIBRARIES ***************
 #include <Wire.h> 
 #include <Adafruit_SSD1306.h>
+#include <Adafruit_BMP085.h>
 // ***********************************
 
 // ********* FUNCTIONS ***************
@@ -15,6 +16,7 @@
 
 // ********* Global Variables ********
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1); // Create an object of the oled library
+Adafruit_BMP085 bmp; // Create an object of the bmp180 library
 
 int option =0; // This variable shows where the user wants to go
 // ***********************************
@@ -42,10 +44,19 @@ void setup() {
   display.setTextSize(2); // Set the scale of the text, 2x scale
   display.setTextColor(SSD1306_WHITE); // Draw white text
 
+  // Init BM180 sensor
+  if (!bmp.begin()) {
+    Serial.println("The BMP180 doesn't response");
+    for(;;); // Don't proceed, loop forever
+  }
+
   // Print the Main menu
   createMainMenu(&display, option);
   drawArrow(&display, option);
   display.display(); // Show menu
+
+  delay(4000);
+  option=1; // Select the height
 }
 
 void loop() {
@@ -55,7 +66,7 @@ void loop() {
       break;
 
     case 1: // Measure Height
-      showHeightScreen();
+      showHeightScreen(&display, &bmp);
       break;
 
     case 2: // Measure Angle
