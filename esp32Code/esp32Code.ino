@@ -12,6 +12,7 @@
 #define SCREEN_ADDRESS 0x3C
 #define SCREEN_WIDTH 128 
 #define SCREEN_HEIGHT 64
+#define FILTER_TM 125
 // ***********************************
 
 // ********* Global Variables ********
@@ -21,7 +22,7 @@ Adafruit_BMP085 bmp; // Create an object of the bmp180 library
 int option =0; // This variable shows where the user wants to go
 // ***********************************
 
-// ********* Prototype Functions *****
+// ********* Functions Prototype *****
 void createMainMenu(Adafruit_SSD1306);
 void drawArrow(Adafruit_SSD1306*, int);
 void showHeightScreen();
@@ -55,8 +56,8 @@ void setup() {
   drawArrow(&display, option);
   display.display(); // Show menu
 
-  delay(4000);
-  option=1; // Select the height
+  delay(4000); // TODO: Delete This
+  option=1; // Select the height (after, the user will do this with the encoder)
 }
 
 void loop() {
@@ -76,6 +77,5 @@ void loop() {
     case 3: // Measure Rolling disntace
       showRollingScreen();
       break;
-
   }
 }
